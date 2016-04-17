@@ -4,6 +4,10 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	[SerializeField]
+	private GameObject gameManagerObject;
+	private GameManager gameManager;
+
+	[SerializeField]
 	private float minSize = 1.0f;
 	[SerializeField]
 	private float maxSize = 4.0f;
@@ -25,6 +29,7 @@ public class Player : MonoBehaviour {
 	private float easeTime = 0.0f;
 
 	void Start () {
+		gameManager = gameManagerObject.GetComponent<GameManager>();
 		rb = GetComponent<Rigidbody>();
 		size = minSize;
 		CheckIfOnGround();
@@ -83,5 +88,9 @@ public class Player : MonoBehaviour {
 			transform.position,
 			testForGroundAt,
 			1 << LayerMask.NameToLayer("Ground"));
+	}
+	
+	public void AssignScore(int score) {
+		gameManager.AddScore(score);
 	}
 }

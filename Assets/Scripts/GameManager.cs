@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
 		scoreText.text = "SCORE: " + score + " pts";
 	}
 
-	void AddScore (int score) {
+	public void AddScore (int score) {
 		pickupScore += score;
 	}
 }
