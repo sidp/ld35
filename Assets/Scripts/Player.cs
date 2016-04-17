@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
 	[SerializeField]
 	private float minDrag = 0.0f;
 	[SerializeField]
-	private float maxDrag = 0.5f;
+	private float maxDrag = 0.5f;	
 
 	public bool isBig = false;
 	private bool isOnGround = true;
@@ -30,30 +30,28 @@ public class Player : MonoBehaviour {
 		CheckIfOnGround();
 	}
 
-	void Update () {
-		
-	}
-	
 	void FixedUpdate () {
 		CheckIfOnGround();
 
+		isBig = Input.GetButton("Jump");
+
 		if (isOnGround) {
-			// float forceX = Input.GetAxis("Horizontal") * movementAcceleration;
-			float forceX = 0.75f; // Always apply a little bit of force
+			float forceX = Input.GetAxis("Horizontal") * 10.0f;
+			// float forceX = 10.0f; // Always apply a little bit of force
+			float forceY = 0.0f;
 
 			if (isBig) {
 				forceX = 0.0f;
+				forceY = 0.0f;
 			}
 
-			Vector3 force = new Vector3(forceX, 0.0f, 0.0f);
-
-			if (Input.GetKeyDown("space")) {
-				force.y = 200.0f;
+			if (Input.GetButtonDown("Jump")) {
+				forceY = 20.0f;
 			}
+
+			Vector3 force = new Vector3(forceX, forceY, 0.0f);
 			rb.AddForce(force);
 		}
-
-		isBig = Input.GetKey("space");
 
 		if (isBig && easeTime < 1.0f) {
 			easeTime += 0.2f;
@@ -62,6 +60,8 @@ public class Player : MonoBehaviour {
 		if (!isBig && easeTime > 0.0f) {
 			easeTime -= 0.2f;
 		}
+		
+		easeTime = Mathf.Clamp(easeTime, 0.0f, 1.0f);
 
 		float localEaseTime = 0.5f - Mathf.Cos( easeTime * Mathf.PI ) / 2.0f;
 		size = minSize + ((maxSize - minSize) * localEaseTime);
@@ -70,11 +70,6 @@ public class Player : MonoBehaviour {
 		rb.drag = minDrag + (maxDrag - minDrag) * easeTime;
 
 		gameObject.transform.localScale = new Vector3(size, size, size);
-
-		// Keep at z 0
-		Vector3 fixPosition = gameObject.transform.position;
-		fixPosition.z = 0.0f;
-		gameObject.transform.position = fixPosition;
 	}
 
 	void CheckIfOnGround() {

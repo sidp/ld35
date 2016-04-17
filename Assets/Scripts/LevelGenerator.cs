@@ -29,8 +29,8 @@ public class LevelGenerator : MonoBehaviour {
 	private float levelWidth = 0.0f;
 	private float levelHeight = 0.0f;
 
-	private float partWidth = 90.0f;
-	private float partHeight = 85.0f;
+	private float partWidth = 97f; // 94.25f
+	private float partHeight = 44.5f; // 60.0f
 
 	void Start () {
 		for (int i = 0; i < levelParts.Length; i++)
@@ -49,15 +49,14 @@ public class LevelGenerator : MonoBehaviour {
 	}
 
 	void Update () {
-		if (playerCollider.bounds.center.x > levelWidth - 20.0f) {
+		if (playerCollider.bounds.center.x > levelWidth - 80.0f) {
 			// Time to add another part to the level
-			Debug.Log("Should add new part to level");
 			int index = Random.Range(0, parts.Count);
 			LevelPart newPart = parts[index];
 
 			Vector3 position = new Vector3(
-				levelWidth + partWidth / 2.0f - 20.0f,
-				-levelHeight - partHeight / 2.0f + 30.0f,
+				levelWidth + partWidth / 2.0f - 22.75f,
+				-levelHeight - partHeight / 2.0f + 6.7f,
 				0.0f
 			);
 
