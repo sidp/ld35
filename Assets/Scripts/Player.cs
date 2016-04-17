@@ -30,12 +30,19 @@ public class Player : MonoBehaviour {
 
 	Rigidbody rb;
 
+	AudioSource audioSource;
+	[SerializeField]
+	private AudioClip playerBig;
+	[SerializeField]
+	private AudioClip playerSmall;
+
 	public float size;
 	private float easeTime = 0.0f;
 
 	void Start () {
 		gameManager = gameManagerObject.GetComponent<GameManager>();
 		rb = GetComponent<Rigidbody>();
+		audioSource = GetComponent<AudioSource>();
 		size = minSize;
 		CheckIfOnGround();
 	}
@@ -50,6 +57,18 @@ public class Player : MonoBehaviour {
 
 	void FixedUpdate () {
 		CheckIfOnGround();
+
+		if (isBig && Input.GetButtonUp("Jump")) {
+			audioSource.Stop();
+			audioSource.clip = playerSmall;
+			audioSource.Play();
+		}
+
+		if (!isBig && Input.GetButtonDown("Jump")) {
+			audioSource.Stop();
+			audioSource.clip = playerBig;
+			audioSource.Play();
+		}
 
 		if (isAlive) {
 			isBig = Input.GetButton("Jump");
@@ -121,4 +140,8 @@ public class Player : MonoBehaviour {
 	public void Damage(float damage) {
 		health -= damage;
 	}
+
+	public void KillInstantly() {
+		health = 0;
+	} 
 }
