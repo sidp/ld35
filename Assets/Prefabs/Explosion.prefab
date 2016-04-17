@@ -5571,7 +5571,7 @@ ParticleSystem:
       maxColor: {r: 0.7411765, g: 0.7411765, b: 0.7411765, a: 1}
       minMaxState: 0
     startSize:
-      scalar: 6
+      scalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5587,7 +5587,7 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: 0.8333333
+          value: 0.8
           inSlope: 0
           outSlope: 0
           tangentMode: 0

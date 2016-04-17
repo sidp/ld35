@@ -6,6 +6,10 @@ public class Player : MonoBehaviour {
 	[SerializeField]
 	private GameObject gameManagerObject;
 	private GameManager gameManager;
+	[SerializeField]
+	private GameObject explosion;
+
+	public float health = 3;
 
 	[SerializeField]
 	private float minSize = 1.0f;
@@ -20,6 +24,7 @@ public class Player : MonoBehaviour {
 	[SerializeField]
 	private float maxDrag = 0.5f;	
 
+	private bool isAlive = true;
 	public bool isBig = false;
 	private bool isOnGround = true;
 
@@ -35,10 +40,27 @@ public class Player : MonoBehaviour {
 		CheckIfOnGround();
 	}
 
+	void Update () {
+		if (health <= 0.0f && isAlive) {
+			isAlive = false;
+			gameObject.GetComponent<Rigidbody>().isKinematic = true;
+			gameManager.EndGame();
+		}
+	}
+
 	void FixedUpdate () {
 		CheckIfOnGround();
 
-		isBig = Input.GetButton("Jump");
+		if (isAlive) {
+			isBig = Input.GetButton("Jump");
+		}
+
+		if (Input.GetButtonDown("Jump")) {
+			CameraPosition cameraPosition = Camera.main.GetComponent<CameraPosition> ();
+			if (cameraPosition != null) {
+				cameraPosition.ShakeSpotlight(2.0f, 0.25f);
+			}
+		}
 
 		if (isOnGround) {
 			float forceX = Input.GetAxis("Horizontal") * 10.0f;
@@ -55,7 +77,9 @@ public class Player : MonoBehaviour {
 			}
 
 			Vector3 force = new Vector3(forceX, forceY, 0.0f);
-			rb.AddForce(force);
+			if (isAlive) {
+				rb.AddForce(force);
+			}
 		}
 
 		if (isBig && easeTime < 1.0f) {
@@ -65,7 +89,7 @@ public class Player : MonoBehaviour {
 		if (!isBig && easeTime > 0.0f) {
 			easeTime -= 0.2f;
 		}
-		
+
 		easeTime = Mathf.Clamp(easeTime, 0.0f, 1.0f);
 
 		float localEaseTime = 0.5f - Mathf.Cos( easeTime * Mathf.PI ) / 2.0f;
@@ -92,5 +116,9 @@ public class Player : MonoBehaviour {
 	
 	public void AssignScore(int score) {
 		gameManager.AddScore(score);
+	}
+	
+	public void Damage(float damage) {
+		health -= damage;
 	}
 }

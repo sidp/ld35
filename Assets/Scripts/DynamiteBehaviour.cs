@@ -19,15 +19,12 @@ public class DynamiteBehaviour : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider collider) {
-		//foreach (ContactPoint contact in collision.contacts) {
-			// todo: give damage
-			//Player hitPlayer = collision.gameObject.GetComponent<Player>();
+		if (collider.gameObject.tag == "Player") {
+			Player player = collider.gameObject.GetComponent<Player>();
+			player.Damage(1.0f);
 
-			if (collider.gameObject.tag == "Player") {
-				Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
-				Destroy(gameObject);
-				Debug.Log("Hit dynamite");
-			}
-		//}
+			Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
+			Destroy(gameObject);
+		}
 	}
 }
