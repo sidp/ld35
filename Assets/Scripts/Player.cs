@@ -64,13 +64,13 @@ public class Player : MonoBehaviour {
 	void FixedUpdate () {
 		CheckIfOnGround();
 
-		if (isBig && Input.GetButtonUp("Jump")) {
+		if (isAlive && isBig && Input.GetButtonUp("Jump")) {
 			audioSource.Stop();
 			audioSource.clip = playerSmallClip;
 			audioSource.Play();
 		}
 
-		if (!isBig && Input.GetButtonDown("Jump")) {
+		if (isAlive && !isBig && Input.GetButtonDown("Jump")) {
 			audioSource.Stop();
 			audioSource.clip = playerBigClip;
 			audioSource.Play();
