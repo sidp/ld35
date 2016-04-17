@@ -32,9 +32,11 @@ public class Player : MonoBehaviour {
 
 	AudioSource audioSource;
 	[SerializeField]
-	private AudioClip playerBig;
+	private AudioClip playerBigClip;
 	[SerializeField]
-	private AudioClip playerSmall;
+	private AudioClip playerSmallClip;
+	[SerializeField]
+	private AudioClip gameOverClip;
 
 	public float size;
 	private float easeTime = 0.0f;
@@ -52,6 +54,10 @@ public class Player : MonoBehaviour {
 			isAlive = false;
 			gameObject.GetComponent<Rigidbody>().isKinematic = true;
 			gameManager.EndGame();
+
+			audioSource.Stop();
+			audioSource.clip = gameOverClip;
+			audioSource.Play();
 		}
 	}
 
@@ -60,13 +66,13 @@ public class Player : MonoBehaviour {
 
 		if (isBig && Input.GetButtonUp("Jump")) {
 			audioSource.Stop();
-			audioSource.clip = playerSmall;
+			audioSource.clip = playerSmallClip;
 			audioSource.Play();
 		}
 
 		if (!isBig && Input.GetButtonDown("Jump")) {
 			audioSource.Stop();
-			audioSource.clip = playerBig;
+			audioSource.clip = playerBigClip;
 			audioSource.Play();
 		}
 

@@ -2394,8 +2394,9 @@ MonoBehaviour:
   minDrag: 0
   maxDrag: 0
   isBig: 0
-  playerBig: {fileID: 8300000, guid: d53a3598e2694418d86ce4c7de87aee3, type: 3}
-  playerSmall: {fileID: 8300000, guid: 42d520b3522d445f5991bb3ae6efe34a, type: 3}
+  playerBigClip: {fileID: 8300000, guid: d53a3598e2694418d86ce4c7de87aee3, type: 3}
+  playerSmallClip: {fileID: 8300000, guid: 42d520b3522d445f5991bb3ae6efe34a, type: 3}
+  gameOverClip: {fileID: 8300000, guid: 5247f9d50392b4ab797a81559c6fb02f, type: 3}
   size: 0
 --- !u!82 &2088781736
 AudioSource:
