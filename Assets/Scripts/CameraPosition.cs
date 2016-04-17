@@ -4,7 +4,11 @@ using System.Collections;
 public class CameraPosition : MonoBehaviour {
 
 	[SerializeField]
+	private GameObject playerObject;
+	[SerializeField]
 	private GameObject lookAtObject;
+	[SerializeField]
+	private bool followLookAtObject = true;
 
 	private Player player;
 	[SerializeField]
@@ -33,14 +37,18 @@ public class CameraPosition : MonoBehaviour {
 	private Camera cameraComponent;
 
 	void Start () {
-		player = lookAtObject.GetComponent<Player>();
-		initialZ = transform.position.z;
+		if (playerObject != null) {
+			player = playerObject.GetComponent<Player>();
+			initialZ = transform.position.z;
+		}
 
 		cameraComponent = GetComponent<Camera>();
 		initialFieldOfView = cameraComponent.fieldOfView;
-		
-		spotlight = spotlightObject.GetComponent<Light>();
-		initialSpotlightAngle = spotlight.spotAngle;
+
+		if (spotlightObject != null) {
+			spotlight = spotlightObject.GetComponent<Light>();
+			initialSpotlightAngle = spotlight.spotAngle;
+		}
 	}
 
 	void FixedUpdate () {
@@ -48,18 +56,22 @@ public class CameraPosition : MonoBehaviour {
 			Vector3 positionToFollow = lookAtObject.transform.position;
 			Vector3 newPosition = transform.position;
 
-			// Follow player
-			newPosition.x += (positionToFollow.x - newPosition.x) * 0.5f;
-			newPosition.y += (positionToFollow.y + yOffset - newPosition.y) * 0.5f;
+			// Follow object
+			if (followLookAtObject) {
+				newPosition.x += (positionToFollow.x - newPosition.x) * 0.5f;
+				newPosition.y += (positionToFollow.y + yOffset - newPosition.y) * 0.5f;
+			}
 
-			if (player.isBig) {
-				newPosition.z += (zWhenPlayerIsBig - newPosition.z) * 0.2f;
-				cameraComponent.fieldOfView += (fieldOfViewWhenPlayerIsBig - cameraComponent.fieldOfView) * 0.2f;
-				spotlight.spotAngle += (spotlightAngleWhenPlayerIsBig - spotlight.spotAngle) * 0.2f;
-			} else {
-				newPosition.z += (initialZ - newPosition.z) * 0.2f;
-				cameraComponent.fieldOfView += (initialFieldOfView - cameraComponent.fieldOfView) * 0.2f;
-				spotlight.spotAngle += (initialSpotlightAngle - spotlight.spotAngle) * 0.2f;
+			if (cameraComponent != null) {
+				if (player != null && player.isBig) {
+					newPosition.z += (zWhenPlayerIsBig - newPosition.z) * 0.2f;
+					cameraComponent.fieldOfView += (fieldOfViewWhenPlayerIsBig - cameraComponent.fieldOfView) * 0.2f;
+					spotlight.spotAngle += (spotlightAngleWhenPlayerIsBig - spotlight.spotAngle) * 0.2f;
+				} else {
+					newPosition.z += (initialZ - newPosition.z) * 0.2f;
+					cameraComponent.fieldOfView += (initialFieldOfView - cameraComponent.fieldOfView) * 0.2f;
+					spotlight.spotAngle += (initialSpotlightAngle - spotlight.spotAngle) * 0.2f;
+				}
 			}
 
 			transform.LookAt(lookAtObject.transform);
@@ -90,8 +102,10 @@ public class CameraPosition : MonoBehaviour {
 				shakeIntensity -= shakeDecay;
 			}
 
-			// Set position
-			transform.position = newPosition;
+			if (followLookAtObject) {
+				// Set position
+				transform.position = newPosition;
+			}
 
 		}
 	}

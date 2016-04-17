@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour {
 
 	public void EndGame () {
 		gameOver = true;
-		StartCoroutine (DelayedEndGame ());
+		StartCoroutine (DelayedEndGame());
 	}
 
 	IEnumerator DelayedEndGame() {

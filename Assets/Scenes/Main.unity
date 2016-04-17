@@ -372,6 +372,67 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e9f3a4726315459f84d6b7caf00bcdf, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &300152822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 300152826}
+  - 33: {fileID: 300152825}
+  - 65: {fileID: 300152824}
+  - 114: {fileID: 300152823}
+  m_Layer: 0
+  m_Name: Killzone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &300152823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 300152822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63716e28c6868496881e991aaac44d9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &300152824
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 300152822}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &300152825
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 300152822}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &300152826
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 300152822}
+  m_LocalRotation: {x: -0, y: -0, z: -0.22662114, w: 0.97398305}
+  m_LocalPosition: {x: 66.6, y: 6.9, z: -99.8}
+  m_LocalScale: {x: 100, y: 1, z: 30}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -26.066002}
 --- !u!1 &306842999
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,6 +1057,11 @@ Prefab:
       propertyPath: spotlightObject
       value: 
       objectReference: {fileID: 2101360613}
+    - target: {fileID: 114000010311281558, guid: 6392532d911d64969aec6318c3360e99,
+        type: 2}
+      propertyPath: playerObject
+      value: 
+      objectReference: {fileID: 2088781729}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6392532d911d64969aec6318c3360e99, type: 2}
   m_IsPrefabParent: 0
@@ -1195,7 +1261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed16b6ae20ec24cb7bb6a909c427d2f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerObject: {fileID: 2088781729}
   lookAtObject: {fileID: 2088781729}
+  followLookAtObject: 1
   spotlightObject: {fileID: 2101360613}
   spotlightAngleWhenPlayerIsBig: 110
   yOffset: 3
@@ -1463,6 +1531,7 @@ GameObject:
   - 4: {fileID: 971003355}
   - 114: {fileID: 971003354}
   - 114: {fileID: 971003353}
+  - 114: {fileID: 971003356}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1515,6 +1584,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &971003356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 971003352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639736d8dfec943fcbd0ea6c5fcf0605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1217770912 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1000013902737694, guid: 149c563c52c3e435faaa939556419da3,
@@ -1595,7 +1675,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1232510664}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 971003356}
+        m_MethodName: LoadScene
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1232510664
@@ -1681,7 +1772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1778,13 +1869,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 971003356}
+        m_MethodName: LoadScene
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
